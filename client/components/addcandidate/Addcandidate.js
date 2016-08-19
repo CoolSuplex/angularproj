@@ -35,8 +35,8 @@ System.register(['angular2/core', 'angular2/router', '../../../client/services/h
                     this._userdetails = _userdetails;
                     this._router = _router;
                     this._httpprovider = _httpprovider;
-                    this.candidat = { username: null, name: null, age: null, qualification: null };
-                    this.resCandidate = { username: null, name: null, age: null, qualification: null };
+                    this.candidat = { username: null, usertype: null, name: null, number: null, address: null };
+                    this.resCandidate = { username: null, usertype: null, name: null, number: null, address: null };
                     if (this._userdetails.usertypeDetails() === "" || this._userdetails.isLoggedin() === false) {
                         this._router.navigate(['/HomeCmp']);
                     }
@@ -45,17 +45,18 @@ System.register(['angular2/core', 'angular2/router', '../../../client/services/h
                     var _this = this;
                     var vari = this;
                     candidat.username = vari._userdetails.username;
+                    candidat.usertype = vari._userdetails.usertype;
                     this._httpprovider.httpReq('http://localhost:9001/addcandidate', 'POST', candidat, null).subscribe(function (data) {
                         console.log(data);
                         vari.resCandidate = data;
-                        vari.candidat = { username: null, name: null, age: null, qualification: null };
+                        vari.candidat = { username: null, usertype: null, name: null, number: null, address: null };
                         _this._router.navigate(['CandidatesCmp']);
                     });
                 };
                 AddcandidateComponent = __decorate([
                     core_1.Component({
                         selector: 'addcandidate',
-                        template: "<div>Add Candidates Component</div>\n  <center>\n    <form (ngSubmit)=\"submit(candidat)\">\n            <br>\n            <input type=\"text\" [(ngModel)]=\"candidat.name\" placeholder=\"Name\"/>\n            <br><br>\n            <input type=\"text\" [(ngModel)]=\"candidat.age\" placeholder=\"Age\"/>   \n            <br><br>\n            <input type=\"text\" [(ngModel)]=\"candidat.qualification\" placeholder=\"Qualification\"/>             \n            <br><br>\n            <button type=\"submit\">Submit</button>\n        </form>\n    <!--<div>Data Added: Name - {{resCandidate.name}}, Age - {{resCandidate.age}}, Qualification - {{resCandidate.qualification}}</div>-->\n    </center>\n  ",
+                        template: "<div>Add Candidates Component</div>\n  <center>\n    <form (ngSubmit)=\"submit(candidat)\">\n            <br>\n            <input type=\"text\" [(ngModel)]=\"candidat.name\" placeholder=\"Name\"/>\n            <br><br>\n            <input type=\"text\" [(ngModel)]=\"candidat.number\" placeholder=\"Number\"/>   \n            <br><br>\n            <input type=\"text\" [(ngModel)]=\"candidat.address\" placeholder=\"Address\"/>             \n            <br><br>\n            <button type=\"submit\">Submit</button>\n        </form>\n        </center>\n  ",
                         providers: [http_1.Http, http_1.HTTP_PROVIDERS, httpprovider_1.Httpprovider]
                     }), 
                     __metadata('design:paramtypes', [userdetails_1.Userdetails, router_1.Router, httpprovider_1.Httpprovider])

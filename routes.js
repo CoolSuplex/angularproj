@@ -23,6 +23,7 @@ app.route('/addcandidate').post(db.addcandidate);
 app.route('/deletecandidate').post(db.deletecandidate);
 app.route('/editcandidate').post(db.editcandidate);
 app.route('/changePassword').post(db.changepassword);
+app.route('/makerolechange').post(db.changerole);
 
 // ADMIN section REST APIs
 app.route('/admin/candidates').get(db.getAllcandidates);

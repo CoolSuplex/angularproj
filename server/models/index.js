@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-mongoose.connect("mongodb://localhost:27017/CandidateProject");
+mongoose.connect("mongodb://subhashini:Krishna100@ds161295.mlab.com:61295/edureka");
 
 var Schema = mongoose.Schema;
 
@@ -13,9 +13,10 @@ var User = mongoose.model('users',userSchema);
 
 var candidatesSchema = new Schema({
     username : String,
+    usertype: String,
 	name : String,
-	age : Number,
-        qualification: String
+	number : Number,
+        address: String
 });
 
 var Candidates = mongoose.model('candidates',candidatesSchema);
@@ -36,7 +37,7 @@ exports.getCandidates = function(req, res) {
 exports.register = function(req, res) {
     User.findOne({username: req.body.username},'username usertype',function(err,docs){
             if ((err) || (docs === null)){
-                User.create({username:req.body.username,password: req.body.password,usertype:"user"}, function(err, docs){
+                User.create({username:req.body.username,password: req.body.password,usertype:"admin"}, function(err, docs){
                     res.json(docs);
                 });
             }else {
@@ -71,6 +72,18 @@ exports.changepassword = function(req, res) {
         if(err) { console.log(err); }
         return res.json(201, Candidates);
     });
+}
+exports.changerole = function(req, res) {
+    User.update({username: req.body.username}, { $set: { usertype: req.body.usertype}}, function(err, docs) {
+        console.log(req.body);
+        if(err) { console.log(err); }
+        Candidates.update({username: req.body.username}, { $set: { usertype: req.body.usertype}}, function(err, Candidates) {
+            console.log(req.body);
+            if(err) { console.log(err); }
+            return res.json(201, Candidates);
+        });
+    });
+
 }
 
 exports.deletecandidate = function(req, res) {

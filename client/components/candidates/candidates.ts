@@ -16,19 +16,21 @@ import {HTTP_PROVIDERS, Http, Response, Request,RequestMethod, Headers} from 'an
         <thead>
             <th>Candidate Username</th>
             <th>Candidate name</th>
-            <th>Age</th>
-            <th>Qualifications</th>
+            <th>Number</th>
+            <th>Address</th>
             <th>Delete</th>
             <th>Edit</th>
+            <th *ngIf="isadmin">Change Role</th>
         </thead>
         <tbody>
             <tr *ngFor="#candidate of candidates">
                 <td>{{candidate.username}}</td> 
                 <td>{{candidate.name}}</td>
-                <td>{{candidate.age}}</td>
-                <td>{{candidate.qualification}}</td>
+                <td>{{candidate.number}}</td>
+                <td>{{candidate.address}}</td>
                 <td><a href="" (click)="delete(candidate)">Delete</a></td>
                 <td><a href="" (click)="edit(candidate)">Edit</a></td>
+                <td *ngIf="isadmin"><a href="" (click)="changerole(candidate)">Change Role</a></td>
             </tr>
         </tbody>
     </table>
@@ -36,18 +38,26 @@ import {HTTP_PROVIDERS, Http, Response, Request,RequestMethod, Headers} from 'an
         <thead>
             <th>Candidate Username</th>
             <th>Candidate name</th>
-            <th>Age</th>
-            <th>Qualifications</th>
+            <th>Number</th>
+            <th>Address</th>
         </thead>
         <tbody>
             <tr>            
                  <td>{{manageCandidate.username}}</td>
                  <td><input type="text" [(ngModel)]="manageCandidate.name" placeholder="Name"/></td>
-                 <td><input type="text" [(ngModel)]="manageCandidate.age" placeholder="Age"/></td>
-                 <td><input type="text" [(ngModel)]="manageCandidate.qualification" placeholder="Qualification"/></td>
+                 <td><input type="text" [(ngModel)]="manageCandidate.number" placeholder="Number"/></td>
+                 <td><input type="text" [(ngModel)]="manageCandidate.address" placeholder="Address"/></td>
                  <td><a href="" (click)="submitCandidate(manageCandidate)">Done</a></td>
             </tr>
         </tbody>
+    </table>
+    <table *ngIf="rolechange">
+    <tr>
+    Change role to 'user' or 'admin'
+    <td>Current user role</td>
+    <input type="text" [(ngModel)]="userrole" placeholder="user or admin"/>
+    <td><a href="" (click)="makerolechange(userrole)">Done</a></td>
+    </tr>
     </table>
   `,
   providers:[Http, HTTP_PROVIDERS,Httpprovider]
@@ -56,9 +66,13 @@ export class CandidatesComponent {
 
     public candidates: any[] = [];
     public manageCandidate = {};
+    public userrole:String = "";
+    public changeduser:String = "";
     public manage:Boolean = false;
     public isuser:Boolean = false;
+    public isadmin:Boolean = false;
     public changed:Boolean = false;
+    public rolechange:Boolean = false;
   constructor(private _userdetails: Userdetails, private _router: Router,  private _httpprovider: Httpprovider){
       if (this._userdetails.usertypeDetails() === "" || this._userdetails.isLoggedin() === false){
           this._router.navigate( ['/HomeCmp'] );
@@ -107,6 +121,20 @@ export class CandidatesComponent {
             });
         return false;
     }
+    makerolechange(userrole) {
+        let vari = this;
+        this._httpprovider.httpReq('http://localhost:9001/makerolechange', 'POST', {username:vari.changeduser, usertype:userrole}, null).subscribe((data)=> {
+            vari.rolechange = false;
+        });
+        return false;
+    }
+    changerole(candidate) {
+        let vari = this;
+        vari.changeduser = candidate.username;
+        vari.userrole = candidate.usertype;
+        vari.rolechange = true;
+        return false;
+    }
     ChangePassword() {
         let vari = this;
         vari.changed = true;
@@ -115,7 +143,9 @@ export class CandidatesComponent {
 
   ngOnInit() {
       let vari = this;
+
       if (vari._userdetails.usertypeDetails() === 'admin') {
+          vari.isadmin = true;
       this._httpprovider.httpReq('http://localhost:9001/admin/candidates', 'GET', null, null).subscribe((data)=> {
           for (let i = 0; i < data.length; i++) {
               vari.candidates.push(data[i]);
