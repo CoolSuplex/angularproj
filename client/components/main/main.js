@@ -49,7 +49,7 @@ System.register(['angular2/core', 'angular2/router', '../home/home', '../login/l
                     ]),
                     core_1.Component({
                         selector: 'main-app',
-                        template: " \n      <center><h1>Candidate</h1>\n      <a [routerLink]=\"['HomeCmp']\">Home</a> |\n      <a [routerLink]=\"['LoginCmp']\">Login / Logout</a> | \n      <a [routerLink]=\"['RegCmp']\">Register</a>\n      <hr><br>\n    <router-outlet></router-outlet></center>\n  ",
+                        template: " \n      <center><h1>Contact</h1>\n      <a [routerLink]=\"['HomeCmp']\">Home</a> |\n      <a [routerLink]=\"['LoginCmp']\">Login / Logout</a> | \n      <a [routerLink]=\"['RegCmp']\">Register</a>\n      <hr><br>\n    <router-outlet></router-outlet></center>\n  ",
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink]
                     }), 
                     __metadata('design:paramtypes', [])

@@ -15,8 +15,8 @@ import {AddcandidateComponent} from '../Addcandidate/Addcandidate';
     selector: 'users',
     template:` 
       <center><h1>User Dashboard</h1>
-      <a [routerLink]="['./CandidatesCmp' ]">Candidates</a> |
-      <a [routerLink]="['./AddcandCmp']">Add Candidates</a> |   
+      <a [routerLink]="['./CandidatesCmp' ]">Contacts</a> |
+      <a [routerLink]="['./AddcandCmp']">Add Contacts</a> |   
       <hr><br>
     <router-outlet></router-outlet></center>
   `,

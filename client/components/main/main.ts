@@ -18,7 +18,7 @@ import {UsersComponent} from '../users/users';
 @Component({
   selector: 'main-app',
   template:` 
-      <center><h1>Candidate</h1>
+      <center><h1>Contact</h1>
       <a [routerLink]="['HomeCmp']">Home</a> |
       <a [routerLink]="['LoginCmp']">Login / Logout</a> | 
       <a [routerLink]="['RegCmp']">Register</a>

@@ -48,7 +48,7 @@ System.register(['angular2/core', 'angular2/router', '../../services/userdetails
                     ]),
                     core_1.Component({
                         selector: 'users',
-                        template: " \n      <center><h1>User Dashboard</h1>\n      <a [routerLink]=\"['./CandidatesCmp' ]\">Candidates</a> |\n      <a [routerLink]=\"['./AddcandCmp']\">Add Candidates</a> |   \n      <hr><br>\n    <router-outlet></router-outlet></center>\n  ",
+                        template: " \n      <center><h1>User Dashboard</h1>\n      <a [routerLink]=\"['./CandidatesCmp' ]\">Contacts</a> |\n      <a [routerLink]=\"['./AddcandCmp']\">Add Contacts</a> |   \n      <hr><br>\n    <router-outlet></router-outlet></center>\n  ",
                         directives: [router_1.ROUTER_DIRECTIVES, router_1.RouterLink]
                     }), 
                     __metadata('design:paramtypes', [userdetails_1.Userdetails, router_1.Router])
