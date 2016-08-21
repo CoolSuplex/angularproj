@@ -37,7 +37,7 @@ exports.getCandidates = function(req, res) {
 exports.register = function(req, res) {
     User.findOne({username: req.body.username},'username usertype',function(err,docs){
             if ((err) || (docs === null)){
-                User.create({username:req.body.username,password: req.body.password,usertype:"admin"}, function(err, docs){
+                User.create({username:req.body.username,password: req.body.password,usertype:"user"}, function(err, docs){
                     res.json(docs);
                 });
             }else {
